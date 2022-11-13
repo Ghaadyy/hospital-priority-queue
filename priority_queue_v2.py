@@ -13,7 +13,6 @@ class Node:
 class PriorityQueue:
     def __init__(self):
         self.head = None
-        self.queue = None
 
     # Checks if the queue is empty, If there no head property means it is empty.
     def isEmpty(self):
@@ -23,35 +22,32 @@ class PriorityQueue:
         # Creates the new Patient Node.
         newNode = Node(item, priority)
 
-        if not self.queue:
+        if self.isEmpty():
+            # If the queue is empty, add the patient to the head of the queue.
             self.head = newNode
-            self.queue = newNode
-            return
-
-        if self.head.priority == newNode.priority:
-            temp = self.head.next
-            self.head.next = newNode
-            newNode.next = temp
-            return
-
-        if self.head.priority < newNode.priority:
-            newNode.next = self.head
-            self.head = newNode
-            return
-
-        previous = None
-        current = self.head
-
-        while ((current is not None) and newNode.priority < current.priority):
-            previous = current
-            current = current.next
-
-        if current is not None:
-            previous.next = newNode
-            newNode.next = current
         else:
-            self.queue.next = newNode
-            self.queue = newNode
+            # If the queue isn't empty,
+            if newNode.priority > self.head.priority:  # And the patient's priority is higher than the head of the queue
+                # Make the new patient the head of the queue.
+                newNode.next = self.head
+                self.head = newNode
+            else:  # And the patient's priority isn't higher than the head of the queue,
+                previous = None
+                current = self.head
+                # Iterate through the queue and stop if the current patient is None or
+                # the new patient's priority is higher than the current patient.
+                while ((current is not None) and newNode.priority <= current.priority):
+                    previous = current
+                    current = current.next
+
+                if current is not None:
+                    # If the current patient is not None we insert him between two patients
+                    previous.next = newNode
+                    newNode.next = current
+                else:
+                    # If current is None means we are at the end of the queue,
+                    # So we append the new patient to the previous one
+                    previous.next = newNode
 
     def pop(self):
         # Checks if the queue is empty and stops the pop() action.

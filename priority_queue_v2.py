@@ -50,18 +50,12 @@ class PriorityQueue:
                     previous.next = newNode
 
     def pop(self):
-        # Checks if the queue is empty and stops the pop() action.
+        # Checks if the queue is empty
         if self.isEmpty():
             print('Queue is empty')
-            return
-        # We save the data we want to remove to return the processed patient.
-        temp = self.head
-        # We set the new head to the next patient in queue.
-        self.head = self.head.next
-        if self.head == None:
-            # If the head of the queue is none we should set the last element i.e. the self.queue to None.
-            self.queue = None
-        return temp.name  # We return the processed patient's name.
+        else:
+            # We set the new head to the next patient in queue.
+            self.head = self.head.next
 
     def peek(self):
         # We return the patient's name that is next in queue.
